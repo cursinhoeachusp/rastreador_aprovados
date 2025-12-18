@@ -20,19 +20,19 @@ Atualmente, a conferência de aprovados é feita de forma manual, exigindo que a
 O rastreador de aprovados é um script em Python que utiliza comparação difusa de texto para identificar aprovações em segundos, mesmo que o nome do aluno tenha pequenas diferenças de grafia em relação à lista oficial.
 
 ### Principais funcionalidades
-- **Rapidez:** Processa milhares de nomes em poucos segundos.
-- **100% na nuvem:** Roda via Google Colab, sem necessidade de instalação local.
-- **Relatório automático:** Gera uma planilha Excel pronta com os alunos aprovados e o grau de certeza.
+- **Rapidez:** processa milhares de nomes em poucos segundos.
+- **Acesso remoto:** roda via Google Colab, sem necessidade de instalação local.
+- **Relatório automático:** gera uma planilha Excel pronta com os alunos aprovados e o grau de certeza.
 
 
 
 ## Tecnologias utilizadas
 
-* **Python 3**: Linguagem base.
-* **Pandas**: Manipulação e estruturação das tabelas de dados.
-* **RapidFuzz**: Algoritmos de correspondência de textos de alta performance.
-* **Unidecode**: Normalização de texto (remoção de acentos e de caracteres especiais).
-* **Google Colab**: Ambiente de execução acessível.
+* **Python 3**: linguagem base.
+* **Pandas**: manipulação e estruturação das tabelas de dados.
+* **RapidFuzz**: algoritmos de correspondência de textos de alta performance.
+* **Unidecode**: normalização de texto (remoção de acentos e de caracteres especiais).
+* **Google Colab**: ambiente de execução acessível.
 
 
 
@@ -40,8 +40,9 @@ O rastreador de aprovados é um script em Python que utiliza comparação difusa
 
 Para executar o script siga os passos:
 
-1.  **Acesse o notebook:** Clique no arquivo `rastreador_aprovados.ipynb` acima ou abra no Google Colab.
-2.  **Prepare os arquivos:** Tenha em seu computador:
+1.  **Acesse o notebook:** 
+    * Clique no arquivo `rastreador_aprovados.ipynb` acima ou abra no Google Colab.
+2.  **Prepare os arquivos:**
     * Planilha de alunos do CPE (`.xlsx` ou `.csv`).
     * Lista oficial de aprovados (`.xlsx` ou `.csv`).
 3.  **Rode o programa:**
@@ -70,7 +71,7 @@ O sistema classifica os resultados para facilitar a conferência humana:
 
 ## Próximos passos
 
-A evolução deste projeto inclui desenvolver uma interface gráfica, realizando a migração do script para **Streamlit**, criando uma interação amigável onde o usuário apenas arrasta os arquivos, sem ver o código.
+A evolução deste projeto inclui desenvolver uma interface gráfica, realizando a migração do script para **Streamlit**, criando uma interação amigável onde o usuário apenas arrasta os arquivos, sem ver o código. Além disso, em versões futuras, busca-se incluir o CPF ou outro número de identificação único nas buscas para melhorar a precisão dos resultados. 
 
 
 
