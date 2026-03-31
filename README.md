@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# Rastreador de Aprovados | CPE
+# Rastreador de aprovados | CPE
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
@@ -17,22 +17,21 @@
 A conferência de aprovados costumava ser feita de forma manual, exigindo que a equipe analisasse listas em PDF com milhares de nomes. Além de lento e sujeito a erros humanos, cruzar listas desestruturadas (como PDFs de vestibulares) com planilhas de alunos era um desafio técnico complexo.
 
 ## Solução proposta
-O rastreador evoluiu de um simples script para uma aplicação web completa. Para resolver o problema dos PDFs (que não possuem tabelas perfeitas), o nosso algoritmo extrai todo o conteúdo do arquivo e o transforma em um bloco de texto contínuo. 
+O rastreador evoluiu de um simples script para uma aplicação web completa. Para resolver o problema dos PDFs, o nosso algoritmo extrai todo o conteúdo do arquivo e o transforma em um bloco de texto contínuo. 
 
-Ele busca o nome do aluno nesse texto e, ao encontrá-lo, cria uma **janela de contexto** (analisando os caracteres ao redor do nome) para procurar fragmentos do **CPF** do aluno. Isso atesta a aprovação com segurança e elimina o risco de falsos positivos com homônimos.
+Ele busca o nome do aluno nesse texto e, ao encontrá-lo, cria uma janela de contexto (analisando os caracteres ao redor do nome) para procurar fragmentos do CPF do aluno. Isso atesta a aprovação com segurança e elimina o risco de falsos positivos com homônimos.
 
 ### Principais funcionalidades
 - **Interface web:** Interação amigável construída com Streamlit. Basta arrastar os arquivos na tela.
-- **Leitura de dados Desestruturados:** Suporte direto a arquivos `.pdf` e `.txt`, além das planilhas `.csv` e `.xlsx`.
+- **Leitura de dados desestruturados:** Suporte direto a arquivos `.pdf` e `.txt`, além das planilhas `.csv` e `.xlsx`.
 - **Validação dupla (Nome + CPF):** Cruzamento inteligente que usa a proximidade do documento no texto para validar nomes exatos ou até mesmo nomes cortados pela formatação do vestibular.
-- **Rapidez:** Processa blocos gigantescos de texto e milhares de nomes em segundos.
 
 ## Tecnologias utilizadas
-* **Python 3:** Linguagem base do back-end.
+* **Python 3:** Linguagem base do backend.
 * **Streamlit:** Framework para a criação da interface web interativa.
-* **Pdfplumber & PyPDF:** Bibliotecas responsáveis pela extração e leitura pesada dos arquivos PDF.
+* **Pdfplumber & PyPDF:** Bibliotecas responsáveis pela extração e leitura dos arquivos PDF.
 * **Pandas:** Manipulação, estruturação das tabelas de dados e geração de relatórios.
-* **RapidFuzz:** Algoritmos de correspondência de textos (fuzzy matching) para buscas em planilhas.
+* **RapidFuzz:** Algoritmos de correspondência de textos para buscas em planilhas.
 * **Unidecode & RegEx:** Normalização de texto e limpeza de caracteres especiais.
 
 ## Como executar
@@ -40,22 +39,26 @@ Ele busca o nome do aluno nesse texto e, ao encontrá-lo, cria uma **janela de c
 Para rodar a aplicação localmente, siga os passos:
 
 1. **Clone o repositório:**
+
 ```bash
-git clone [https://github.com/cursinhoeachusp/rastreador_aprovados.git](https://github.com/cursinhoeachusp/rastreador_aprovados.git)
+git clone https://github.com/cursinhoeachusp/rastreador_aprovados.git
 cd rastreador_aprovados
 ```
 
 2. **Instale as dependências:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 3. **Inicie a aplicação:**
+
 ```bash
 streamlit run app.py
 ```
 
 4. **No navegador:**
+
 O sistema abrirá automaticamente. Faça o upload da planilha de alunos, depois do PDF oficial, selecione o método de validação (nome + CPF) e clique em "Buscar".
 
 ## Exemplo de resultado
