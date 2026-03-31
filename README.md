@@ -2,10 +2,10 @@
 
 <div align="center">
 
-# Rastreador de aprovados | CPE
+# Rastreador de Aprovados | CPE
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)
-![Google Colab](https://img.shields.io/badge/Google_Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 
 <p align="center">
   Automatização do cruzamento de dados entre alunos do Cursinho Popular EACH e listas oficiais de vestibulares (FUVEST, SISU, UNESP).
@@ -13,72 +13,59 @@
 
 </div>
 
-
-
 ## Problema identificado
-Atualmente, a conferência de aprovados é feita de forma manual, exigindo que a equipe do CPE analise listas com milhares de nomes para encontrar os alunos do cursinho. Isso é lento, cansativo e sujeito a erros humanos.
+A conferência de aprovados costumava ser feita de forma manual, exigindo que a equipe analisasse listas em PDF com milhares de nomes. Além de lento e sujeito a erros humanos, cruzar listas desestruturadas (como PDFs de vestibulares) com planilhas de alunos era um desafio técnico complexo.
 
 ## Solução proposta
-O rastreador de aprovados é um script em Python que utiliza comparação difusa de texto para identificar aprovações em segundos, mesmo que o nome do aluno tenha pequenas diferenças de grafia em relação à lista oficial.
+O rastreador evoluiu de um simples script para uma aplicação web completa. Para resolver o problema dos PDFs (que não possuem tabelas perfeitas), o nosso algoritmo extrai todo o conteúdo do arquivo e o transforma em um bloco de texto contínuo. 
+
+Ele busca o nome do aluno nesse texto e, ao encontrá-lo, cria uma **janela de contexto** (analisando os caracteres ao redor do nome) para procurar fragmentos do **CPF** do aluno. Isso atesta a aprovação com segurança e elimina o risco de falsos positivos com homônimos.
 
 ### Principais funcionalidades
-- **Rapidez:** processa milhares de nomes em poucos segundos.
-- **Acesso remoto:** roda via Google Colab, sem necessidade de instalação local.
-- **Relatório automático:** gera uma planilha Excel pronta com os alunos aprovados e o grau de certeza.
-
-
+- **Interface web:** Interação amigável construída com Streamlit. Basta arrastar os arquivos na tela.
+- **Leitura de dados Desestruturados:** Suporte direto a arquivos `.pdf` e `.txt`, além das planilhas `.csv` e `.xlsx`.
+- **Validação dupla (Nome + CPF):** Cruzamento inteligente que usa a proximidade do documento no texto para validar nomes exatos ou até mesmo nomes cortados pela formatação do vestibular.
+- **Rapidez:** Processa blocos gigantescos de texto e milhares de nomes em segundos.
 
 ## Tecnologias utilizadas
-
-* **Python 3**: linguagem base.
-* **Pandas**: manipulação e estruturação das tabelas de dados.
-* **RapidFuzz**: algoritmos de correspondência de textos de alta performance.
-* **Unidecode**: normalização de texto (remoção de acentos e de caracteres especiais).
-* **Google Colab**: ambiente de execução acessível.
-
-
+* **Python 3:** Linguagem base do back-end.
+* **Streamlit:** Framework para a criação da interface web interativa.
+* **Pdfplumber & PyPDF:** Bibliotecas responsáveis pela extração e leitura pesada dos arquivos PDF.
+* **Pandas:** Manipulação, estruturação das tabelas de dados e geração de relatórios.
+* **RapidFuzz:** Algoritmos de correspondência de textos (fuzzy matching) para buscas em planilhas.
+* **Unidecode & RegEx:** Normalização de texto e limpeza de caracteres especiais.
 
 ## Como executar
 
-Para executar o script siga os passos:
+Para rodar a aplicação localmente, siga os passos:
 
-1.  **Acesse o notebook:** 
-    * Clique no arquivo `rastreador_aprovados.ipynb` acima ou abra no Google Colab.
-2.  **Prepare os arquivos:**
-    * Planilha de alunos do CPE (`.xlsx` ou `.csv`).
-    * Lista oficial de aprovados (`.xlsx` ou `.csv`).
-3.  **Rode o programa:**
-    * No Colab, clique no ícone de "play" na célula principal.
-    * O sistema instalará as dependências automaticamente.
-4.  **Faça o upload:**
-    * Quando solicitado, envie a planilha de alunos.
-    * Em seguida, envie a lista oficial.
-5.  **Baixe o resultado:**
-    * O script gerará o arquivo `resultado_cruzamento.xlsx`.
-    * O download iniciará automaticamente (ou estará disponível na aba de arquivos).
+1. **Clone o repositório:**
+```bash
+git clone [https://github.com/cursinhoeachusp/rastreador_aprovados.git](https://github.com/cursinhoeachusp/rastreador_aprovados.git)
+cd rastreador_aprovados
+```
 
+2. **Instale as dependências:**
+```bash
+pip install -r requirements.txt
+```
 
+3. **Inicie a aplicação:**
+```bash
+streamlit run app.py
+```
+
+4. **No navegador:**
+O sistema abrirá automaticamente. Faça o upload da planilha de alunos, depois do PDF oficial, selecione o método de validação (nome + CPF) e clique em "Buscar".
 
 ## Exemplo de resultado
+O sistema gera um painel interativo com os resultados classificados, pronto para a conferência da diretoria:
+| Aluno CPE | Nome detectado | Similaridade | Status | Observação |
+| :---: | :---: | :---: | :---: | :---: |
+| Carlos Souza | CARLOS SOUZA | 100% | ✅ Aprovado | Nome completo e CPF (.456.) conferem. |
+| Ana V. Silva | ANA V. SILVA | Parcial + CPF | ✅ Aprovado (Nome cortado) | Nome longo identificado + CPF confirmado. |
+| João Pedro | JOÃO PEDRO | 100% | ⚠️ Verificar | Nome encontrado, mas CPF não bateu no contexto. |
 
-O sistema classifica os resultados para facilitar a conferência humana:
+<br>
 
-| Aluno CPE | Nome na lista oficial | Similaridade | Status |
-| :--- | :--- | :---: | :--- |
-| **Carlos Souza** | CARLOS SOUZA | 100% | ✅ Aprovado |
-| **Ana V. Silva** | ANA VITORIA SILVA | 88% | ⚠️ Verificar |
-| **João Pedro** | PEDRO ALMEIDA | 40% | ❌ Ignorado |
-
-
-
-## Próximos passos
-
-A evolução deste projeto inclui desenvolver uma interface gráfica, realizando a migração do script para **Streamlit**, criando uma interação amigável onde o usuário apenas arrasta os arquivos, sem ver o código. Além disso, em versões futuras, busca-se incluir o CPF ou outro número de identificação único nas buscas para melhorar a precisão dos resultados. 
-
-
-
-<div align="center">
-
-**Desenvolvido com 🧡💙 por Inovatec**
-
-</div>
+<div align='center'><b>Desenvolvido com 🧡💙 por Inovatec</b></div>
