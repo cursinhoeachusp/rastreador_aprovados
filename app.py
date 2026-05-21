@@ -41,6 +41,7 @@ html, body, [data-testid="stAppViewContainer"], .stApp {
     font-size: 28px !important; 
     margin: 0; 
     color: inherit; 
+    white-space: nowrap;
 }
 
 /* Garantir que labels e textos gerais sejam brancos dentro do card */
